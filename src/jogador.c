@@ -191,12 +191,16 @@ bool verificarColisaoChao(Jogador *jogador)
 
 void movimentoVerticalJogador(Jogador *jogador)
 {
-    jogadorSalta(jogador);
-
-    if (!verificarColisaoPlataformas(jogador))
-        aplicarGravidade(jogador);
-
+    // Primeiro verifica colisão com plataformas e chão
+    verificarColisaoPlataformas(jogador);
     verificarColisaoChao(jogador);
+    
+    // Depois processa o pulo
+    jogadorSalta(jogador);
+    
+    // Por fim aplica gravidade se não estiver no chão
+    if (!jogador->nochao)
+        aplicarGravidade(jogador);
 }
 
 void movimentoHorizontalJogador(Jogador *jogador)
